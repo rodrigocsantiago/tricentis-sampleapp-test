@@ -1,7 +1,7 @@
-package com.rsantiago.pages.tricentis.insurance;
+package com.rsantiago.tricentis.pages.insurance;
 
-import com.rsantiago.model.VehicleType;
-import com.rsantiago.pages.SeleniumBasePage;
+import com.rsantiago.framework.SeleniumBasePage;
+import com.rsantiago.tricentis.pages.insurance.model.VehicleType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -9,7 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 
-import static com.rsantiago.framework.SeleniumUtils.*;
+import static com.rsantiago.framework.SeleniumUtils.checkSingleValue;
 
 public class SelectPriceOptionPage extends SeleniumBasePage {
 

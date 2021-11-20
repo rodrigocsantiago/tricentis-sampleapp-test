@@ -1,4 +1,4 @@
-package com.rsantiago.model;
+package com.rsantiago.tricentis.pages.insurance.model;
 
 public enum VehicleType {
     AUTOMOBILE("Automobile"),

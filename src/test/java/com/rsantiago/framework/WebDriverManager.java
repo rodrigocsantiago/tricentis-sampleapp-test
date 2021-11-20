@@ -13,10 +13,8 @@ public class WebDriverManager {
 
     public static WebDriver getDriver(BrowserType browserType) {
         if (instance.get() == null) {
-            System.out.println("Setting up WebDriver for thread " + Thread.currentThread().getId());
             instance.set(WebDriverFactory.getDriver(browserType));
         }
-        System.out.println("Getting WebDriver for thread " + Thread.currentThread().getId());
         return instance.get();
     }
 
@@ -34,7 +32,6 @@ public class WebDriverManager {
 
     public static void closeDriver() {
         if (instance.get() != null) {
-            System.out.println("Closing WebDriver");
             instance.get().close();
             instance.remove();
         }

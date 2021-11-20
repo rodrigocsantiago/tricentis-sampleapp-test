@@ -1,21 +1,24 @@
-package com.rsantiago.pages.tricentis.insurance;
+package com.rsantiago.tricentis.pages.insurance;
 
-import com.rsantiago.model.VehicleType;
-import com.rsantiago.pages.SeleniumBasePage;
+import com.rsantiago.framework.SeleniumBasePage;
+import com.rsantiago.tricentis.pages.insurance.model.VehicleType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import static com.rsantiago.framework.SeleniumUtils.*;
+import static com.rsantiago.framework.SeleniumUtils.checkMultipleValues;
+import static com.rsantiago.framework.SeleniumUtils.selectValueFromElement;
 
 public class EnterProductDataPage extends SeleniumBasePage {
 
     private static final String EXPECTED_PAGE_TITLE = "Enter Product Data";
 
-    private VehicleType vehicleType;
+    private final VehicleType vehicleType;
 
     @FindBy(id = "startdate")
     private WebElement startDate;
@@ -41,33 +44,47 @@ public class EnterProductDataPage extends SeleniumBasePage {
     @FindBy(css = "a#enterproductdata > span.counter")
     private WebElement missingFieldsCounter;
 
-    public EnterProductDataPage enterStartDate(String startDate) {
+    public void enterStartDate(String startDate) {
         this.startDate.sendKeys(startDate);
-        return this;
     }
 
-    public EnterProductDataPage selectInsuranceSum(String insuranceSum) {
+    public void selectInsuranceSum(String insuranceSum) {
         selectValueFromElement(this.insuranceSum, insuranceSum);
-        return this;
     }
 
-    public EnterProductDataPage selectMeritRating(String meritRating) {
+    public void selectMeritRating(String meritRating) {
         selectValueFromElement(this.meritRating, meritRating);
-        return this;
     }
 
-    public EnterProductDataPage selectDamageInsurance(String damageInsurance) {
+    public void selectDamageInsurance(String damageInsurance) {
         selectValueFromElement(this.damageInsurance, damageInsurance);
-        return this;
     }
 
-    public EnterProductDataPage selectOptionalProducts(String[] optionalProducts) {
+    public void selectOptionalProducts(String[] optionalProducts) {
         checkMultipleValues(this.optionalProducts, "id", optionalProducts);
-        return this;
     }
 
-    public EnterProductDataPage selectCourtesyCar(String courtesyCar) {
+    public void selectCourtesyCar(String courtesyCar) {
         selectValueFromElement(this.courtesyCar, courtesyCar);
+    }
+
+    public EnterProductDataPage enterProductData(String insuranceSum, String damageInsurance) {
+        //  Start date must be more than 1 month in the future. So, I'm using 2 months ahead
+        LocalDate currentDate = LocalDate.now();
+        LocalDate startDate = currentDate.plusMonths(2);
+
+        enterStartDate(startDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy")));
+        selectInsuranceSum(insuranceSum);
+        //  Only automobiles have this field
+        if (vehicleType == VehicleType.AUTOMOBILE) {
+            selectMeritRating("Bonus 9");
+        }
+        selectDamageInsurance(damageInsurance);
+        selectOptionalProducts(new String[]{"EuroProtection", "LegalDefenseInsurance"});
+        //  Only automobiles have this field
+        if (vehicleType == VehicleType.AUTOMOBILE) {
+            selectCourtesyCar("No");
+        }
         return this;
     }
 

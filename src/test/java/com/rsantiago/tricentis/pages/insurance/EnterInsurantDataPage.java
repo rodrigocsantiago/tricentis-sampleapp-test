@@ -1,7 +1,7 @@
-package com.rsantiago.pages.tricentis.insurance;
+package com.rsantiago.tricentis.pages.insurance;
 
-import com.rsantiago.model.VehicleType;
-import com.rsantiago.pages.SeleniumBasePage;
+import com.rsantiago.framework.SeleniumBasePage;
+import com.rsantiago.tricentis.pages.insurance.model.VehicleType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -15,7 +15,7 @@ public class EnterInsurantDataPage extends SeleniumBasePage {
 
     private static final String EXPECTED_PAGE_TITLE = "Enter Insurant Data";
 
-    private VehicleType vehicleType;
+    private final VehicleType vehicleType;
 
     @FindBy(id = "firstname")
     private WebElement firstName;

@@ -1,9 +1,13 @@
-package com.rsantiago.steps;
+package com.rsantiago.tricentis.steps;
 
 import com.rsantiago.framework.WebDriverManager;
-import com.rsantiago.model.VehicleType;
-import com.rsantiago.pages.tricentis.HomePage;
-import com.rsantiago.pages.tricentis.insurance.*;
+import com.rsantiago.tricentis.pages.HomePage;
+import com.rsantiago.tricentis.pages.insurance.EnterInsurantDataPage;
+import com.rsantiago.tricentis.pages.insurance.EnterProductDataPage;
+import com.rsantiago.tricentis.pages.insurance.EnterVehicleDataPage;
+import com.rsantiago.tricentis.pages.insurance.SelectPriceOptionPage;
+import com.rsantiago.tricentis.pages.insurance.SendQuotePage;
+import com.rsantiago.tricentis.pages.insurance.model.VehicleType;
 import io.cucumber.java.AfterAll;
 import io.cucumber.java.BeforeAll;
 import io.cucumber.java.ParameterType;
@@ -14,8 +18,6 @@ import io.cucumber.java.en.When;
 import org.openqa.selenium.InvalidArgumentException;
 import org.openqa.selenium.WebDriver;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.EnumSet;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -62,20 +64,10 @@ public class QuoteSteps {
         assertThat(enterVehicleDataPage.getPageTitle(), is("Enter Vehicle Data"));
     }
 
-    @And("I enter vehicle data with valid values")
-    public void iEnterVehicleData() {
-        //  Here I'm calling the page object using a simple method
-        enterVehicleDataPage.enterAutomobileVehicleData("BMW",
-                "250",
-                "10/10/2010",
-                "7",
-                "Diesel",
-                "20500",
-                "ABC1234",
-                "15000");
-
+    @And("I enter vehicle data for make {string} with valid values")
+    public void iEnterVehicleData(String make) {
+        enterVehicleDataPage.enterVehicleData(make);
         assertThat(enterVehicleDataPage.getMissingFieldCount(), is(0));
-
         enterInsurantDataPage = enterVehicleDataPage.clickNext();
     }
 
@@ -100,22 +92,10 @@ public class QuoteSteps {
         enterProductDataPage = enterInsurantDataPage.clickNext();
     }
 
-    @And("I enter product data with valid values")
-    public void iEnterProductDataWithValidValues() {
-        //  Start date must be more than 1 month in future
-        LocalDate currentDate = LocalDate.now();
-        LocalDate startDate = currentDate.plusMonths(2);
-
-        enterProductDataPage
-                .enterStartDate(startDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy")))
-                .selectInsuranceSum("5000000")
-                .selectMeritRating("Bonus 9")
-                .selectDamageInsurance("Full Coverage")
-                .selectOptionalProducts(new String[]{"EuroProtection", "LegalDefenseInsurance"})
-                .selectCourtesyCar("No");
-
+    @And("I enter product data for {string} damage insurance and sum of {string}")
+    public void iEnterProductDataWithValidValues(String damageInsurance, String insuranceSum) {
+        enterProductDataPage.enterProductData(insuranceSum, damageInsurance);
         assertThat(enterProductDataPage.getMissingFieldCount(), is(0));
-
         selectPriceOptionPage = enterProductDataPage.clickNext();
     }
 

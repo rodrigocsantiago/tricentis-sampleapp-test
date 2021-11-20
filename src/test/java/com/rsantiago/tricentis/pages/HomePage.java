@@ -1,8 +1,8 @@
-package com.rsantiago.pages.tricentis;
+package com.rsantiago.tricentis.pages;
 
-import com.rsantiago.model.VehicleType;
-import com.rsantiago.pages.SeleniumBasePage;
-import com.rsantiago.pages.tricentis.insurance.EnterVehicleDataPage;
+import com.rsantiago.framework.SeleniumBasePage;
+import com.rsantiago.tricentis.pages.insurance.EnterVehicleDataPage;
+import com.rsantiago.tricentis.pages.insurance.model.VehicleType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;

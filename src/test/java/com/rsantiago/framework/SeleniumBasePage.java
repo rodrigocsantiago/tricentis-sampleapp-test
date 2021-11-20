@@ -1,4 +1,4 @@
-package com.rsantiago.pages;
+package com.rsantiago.framework;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
