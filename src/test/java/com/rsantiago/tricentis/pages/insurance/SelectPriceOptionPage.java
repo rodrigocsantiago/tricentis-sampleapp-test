@@ -36,7 +36,8 @@ public class SelectPriceOptionPage extends SeleniumBasePage {
     }
 
     public SendQuotePage clickNext() {
-        next.click();
+    	//	Have to wait a little longer here
+    	wait.until(ExpectedConditions.elementToBeClickable(next)).click();
         return new SendQuotePage(driver, vehicleType);
     }
 
