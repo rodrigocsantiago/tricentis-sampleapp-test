@@ -11,8 +11,6 @@ public class SendQuotePage extends SeleniumBasePage {
 
     private static final String EXPECTED_PAGE_TITLE = "Send Quote";
 
-    private VehicleType vehicleType;
-
     @FindBy(id = "email")
     private WebElement email;
 
@@ -94,7 +92,6 @@ public class SendQuotePage extends SeleniumBasePage {
 
     public SendQuotePage(WebDriver driver, VehicleType vehicleType) {
         super(driver);
-        this.vehicleType = vehicleType;
         //  Wait until we get the correct page title for this page
         wait.until(ExpectedConditions.titleIs(EXPECTED_PAGE_TITLE));
     }
