@@ -15,7 +15,10 @@ public class WebDriverManager {
         if (instance.get() == null) {
             instance.set(WebDriverFactory.getDriver(browserType));
         }
-        return instance.get();
+        WebDriver driver = instance.get();
+        //	Maximize window before returning the WebDriver
+        driver.manage().window().maximize();
+        return driver;
     }
 
     public static WebDriver getDriverFromArguments() {
